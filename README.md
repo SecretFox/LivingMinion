@@ -4,6 +4,7 @@ Secret World Legends mod, that allows players to apply (client-sided) lookspacka
 ![kuva](https://user-images.githubusercontent.com/25548149/225974967-51984ecb-3e51-400c-b635-310fea9cbf8b.png)
 
 ### Configuration  
+By default current characters faction handler will be used.  
 Use `/option LivingMinion_Looks "<lookspackageID>"` to set used lookspackage.  
 For list of lookspackages see [HERE](https://github.com/SecretFox/LivingMinion/blob/main/Lookconfig_all.txt), multiple values can be separated by `;`.  
 As living flame lacks base body it may be necessary to combine several lookspackages to complete the look.  
