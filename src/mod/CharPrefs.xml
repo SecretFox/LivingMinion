@@ -2,4 +2,6 @@
 <Root>
 	<Value name="LivingMinion" value="true" />
 	<Value name="LivingMinion_Looks" value="false" />
+	<Value name="LivingMinion_Doppel" value="false" />
+	<Value name="LivingMinion_Invoke" value="false" />
 </Root>

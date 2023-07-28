@@ -6,6 +6,7 @@ import com.GameInterface.QuestsBase;
 import com.GameInterface.VicinitySystem;
 import com.Utils.ID32;
 import com.Utils.WeakList;
+import mx.utils.Delegate;
 /*
 * ...
 * @author SecretFox
@@ -13,6 +14,9 @@ import com.Utils.WeakList;
 class com.fox.livingMinion 
 {
 	public var Looks:DistributedValue;
+	public var Doppel:DistributedValue;
+	public var Invoke:DistributedValue;
+	
 	public static function main(swfRoot:MovieClip):Void
 	{
 		var mod = new livingMinion(swfRoot);
@@ -22,6 +26,8 @@ class com.fox.livingMinion
 
 	public function livingMinion() {
 		Looks = DistributedValue.Create("LivingMinion_Looks");
+		Doppel = DistributedValue.Create("LivingMinion_Doppel");
+		Invoke = DistributedValue.Create("LivingMinion_Invoke");
 		Looks.SignalChanged.Connect(FindMinion, this);
 	}
 	
@@ -31,10 +37,7 @@ class com.fox.livingMinion
         for (var num = 0; num < ls.GetLength(); num++)
         {
             var dyn:Character = ls.GetObject(num);
-			if ( dyn.GetStat(112) == 38404)
-			{
-				ApplyLooks(dyn);
-			}
+			SlotEnteredVicinity(dyn.GetID());
         }
 	}
 	
@@ -44,14 +47,45 @@ class com.fox.livingMinion
 		{
 			return;
 		}
-		var dynel:Dynel = new Dynel(id);
-		if (dynel.GetStat(112) == 38404) ApplyLooks(dynel);
+		var dynel:Character = Character.GetCharacter(id);
+		var stat = dynel.GetStat(112);
+		switch (stat) 
+		{
+			case 38404:
+				var lookstring = Looks.GetValue();
+				if ( lookstring )
+				{
+					ApplyLooks(dynel, lookstring);
+				}
+				break;
+			case 38361:
+				var lookstring = Invoke.GetValue();
+				if ( lookstring )
+				{
+					setTimeout(Delegate.create(this, ApplyLooks), 250, dynel, lookstring, true);
+					// needs delay to make sure lookspackages have time to load before removal
+				}
+				break;
+			case 36813:
+				var lookstring = Doppel.GetValue();
+				if ( lookstring )
+				{
+					setTimeout(Delegate.create(this, ApplyLooks), 250, dynel, lookstring, false);
+					// needs delay to make sure lookspackages have time to load before removal
+				}
+				break;
+		}
 	}
 	
-	private function ApplyLooks(dyn:Dynel)
+	private function ApplyLooks(dyn:Dynel, lookstring:String, namerequired:Boolean)
 	{
+		if ( namerequired && dyn.GetName() != Character.GetClientCharacter().GetName()){
+			return;
+		}
 		dyn.RemoveAllLooksPackages();
-		var looks:Array = string(Looks.GetValue()).split(";");
+		dyn.AddLooksPackage(7752815); // make invisible
+		// dyn.RemoveLooksPackage(7691854); // Removes fur coat
+		var looks:Array = lookstring.split(";");
 		for (var i = 0; i < looks.length; i++)
 		{
 			dyn.AddLooksPackage(looks[i]);

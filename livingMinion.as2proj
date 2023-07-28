@@ -49,8 +49,8 @@
   <!-- Executed before build -->
   <preBuildCommand />
   <!-- Executed after build -->
-  <postBuildCommand alwaysRun="False">xcopy "$(ProjectDir)\bin\*.*" "H:\Secret World Legends\Data\Gui\Custom\Flash\LivingMinion\*.*" /e /y
-xcopy "$(ProjectDir)\src\mod\*.*" "H:\Secret World Legends\Data\Gui\Custom\Flash\LivingMinion\*.*" /e /y
+  <postBuildCommand alwaysRun="False">xcopy "$(ProjectDir)\bin\*.*" "J:\Secret World Legends\Data\Gui\Custom\Flash\LivingMinion\*.*" /e /y
+xcopy "$(ProjectDir)\src\mod\*.*" "J:\Secret World Legends\Data\Gui\Custom\Flash\LivingMinion\*.*" /e /y
 
 xcopy "$(ProjectDir)\bin\*.*" "./deployment/LivingMinion/*.*" /e /y
 xcopy "$(ProjectDir)\src\mod\*.*" "./deployment/LivingMinion/*.*" /e /y</postBuildCommand>
